@@ -1,9 +1,10 @@
-FROM golang:1.14
+FROM python:3
 
-WORKDIR /go/src/app
+WORKDIR /usr/src/app
+
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
 COPY . .
 
-RUN go get -d -v ./...
-RUN go install -v ./...
-
-CMD ["app"]
+CMD [ "python", "src/producer.py" ]
