@@ -1,4 +1,4 @@
-module producer
+module github.com/madhavhugar/pub-sub-name-store
 
 go 1.12
 

@@ -3,7 +3,8 @@ package file
 import (
 	"bufio"
 	"os"
-	"producer/utils"
+
+	"github.com/madhavhugar/pub-sub-name-store/utils"
 )
 
 // Readline returns a channel populated with file's content

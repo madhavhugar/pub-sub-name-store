@@ -2,11 +2,18 @@ package main
 
 import (
 	"fmt"
-	user "producer/user"
-	utils "producer/utils"
+	"time"
+
+	user "github.com/madhavhugar/pub-sub-name-store/user"
+	utils "github.com/madhavhugar/pub-sub-name-store/utils"
 )
 
 func main() {
+	// Wait for rabbitMQ to startup
+	time.Sleep(10 * time.Second)
+
+	setupInfrastructure()
+
 	users, err := user.GetUsers("./data/data_example.csv")
 	utils.HandleError(err, "error while fetching users")
 

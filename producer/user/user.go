@@ -3,10 +3,11 @@ package user
 import (
 	"encoding/json"
 	"fmt"
-	file "producer/interfaces/file"
-	msgbroker "producer/interfaces/messagebroker"
-	utils "producer/utils"
 	"strings"
+
+	file "github.com/madhavhugar/pub-sub-name-store/interfaces/file"
+	msgbroker "github.com/madhavhugar/pub-sub-name-store/interfaces/messagebroker"
+	utils "github.com/madhavhugar/pub-sub-name-store/utils"
 
 	"github.com/streadway/amqp"
 )
@@ -17,7 +18,7 @@ type Info struct {
 	Email string `json:"email"`
 }
 
-// GetUsers does TODO
+// GetUsers fetches all the users and parses them
 func GetUsers(filepath string) ([]Info, error) {
 	reader, err := file.Readline(filepath)
 	utils.HandleError(err, "error in main reading file")
@@ -38,7 +39,7 @@ func GetUsers(filepath string) ([]Info, error) {
 	return users, nil
 }
 
-// PublishUserInfo does TODO
+// PublishUserInfo publishes data to user info queue
 func PublishUserInfo(user *Info) error {
 	body, err := json.Marshal(user)
 	// utils.HandleError(err, "error while marshalling user")
@@ -53,7 +54,6 @@ func PublishUserInfo(user *Info) error {
 	}
 
 	pubParams := msgbroker.PublishParameters{
-		// TODO: exchange and key as env vars
 		Exchange: "users",
 		Key:      "users.info",
 		Msg: amqp.Publishing{

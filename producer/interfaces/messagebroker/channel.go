@@ -1,8 +1,10 @@
 package messagebroker
 
 import (
-	"producer/utils"
+	"os"
 	"sync"
+
+	"github.com/madhavhugar/pub-sub-name-store/utils"
 
 	"github.com/streadway/amqp"
 )
@@ -11,8 +13,8 @@ var connection *amqp.Connection
 var once sync.Once
 
 func connect() (*amqp.Connection, error) {
-	// TODO: replace to use env var
-	rabbitMQUrl := "amqp://guest:guest@localhost:5672/"
+	rabbitMQHost := os.Getenv("RABBITMQ_HOST")
+	rabbitMQUrl := "amqp://guest:guest@" + rabbitMQHost + ":5672/"
 	conn, err := amqp.Dial(rabbitMQUrl)
 	return conn, err
 }
