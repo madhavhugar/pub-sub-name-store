@@ -28,6 +28,6 @@ python -m pytest tests/
 
 ### TODO
 
-- Test functionality that depends on rabbitMQ - still quite new to golang testing ecosystem
+- Test functionality that depends on rabbitMQ - (still quite new to golang testing ecosystem)
 - Ensure services are started within docker-compose, rather then sleeping within application
-- Add logging
+- Include logging
