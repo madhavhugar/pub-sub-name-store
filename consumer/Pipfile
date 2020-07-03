@@ -1,0 +1,20 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+sqlalchemy = "*"
+pylint = "*"
+flake8 = "*"
+pytest = "*"
+pika = "*"
+psycopg2-binary = "*"
+sqlalchemy-utils = "*"
+testing-postgresql = "*"
+pytest-mock = "*"
+
+[requires]
+python_version = "3.7"
