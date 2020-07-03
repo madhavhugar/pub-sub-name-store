@@ -1,13 +1,39 @@
 version: "3.7"
 services:
+  producergo:
+    build: ./producer
+    depends_on:
+      - postgres
+      - rabbitmq
+    networks:
+      - pubsub
+    env_file:
+      - ./producer.env
+
+  consumerpy:
+    build: ./consumer
+    depends_on:
+      - postgres
+      - rabbitmq
+      - producergo
+    networks:
+      - pubsub
+    env_file:
+      - ./consumer.env
+
   rabbitmq:
+    container_name: pubsub_rabbitmq
     image: rabbitmq:3.8.1-management
     ports:
       - 5672:5672
       - 15672:15672
+    networks:
+      - pubsub
+    logging:
+      driver: none
 
   postgres:
-    container_name: postgres_container
+    container_name: postgres_containerv1
     image: postgres
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
@@ -18,27 +44,14 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - postgres
+      - pubsub
     restart: unless-stopped
-  
-  pgadmin:
-    container_name: pgadmin_container
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
-    volumes:
-       - pgadmin:/root/.pgadmin
-    ports:
-      - "${PGADMIN_PORT:-5050}:80"
-    networks:
-      - postgres
-    restart: unless-stopped
+    logging:
+      driver: none
 
 networks:
-  postgres:
+  pubsub:
     driver: bridge
 
 volumes:
     postgres:
-    pgadmin:
