@@ -4,9 +4,30 @@ Implementation of a simple topic based pub-sub arhitecture with a producer(in Go
 
 ### Architecture in a single line:
 
-csv-data => producer => rabbitMQ => consumer => postgres
+```
+csv-data => producer(golang) => rabbitMQ => consumer(python) => postgres
+```
+
+### Setup
+
+```
+docker-compose up
+```
+
+### Execute tests
+
+```
+cd producer
+go test ./...
+```
+
+```
+cd consumer
+python -m pytest tests/
+```
 
 ### TODO
 
-- [] Search all TODO statements
-- [] Proper error handling
+- Test functionality that depends on rabbitMQ - still quite new to golang testing ecosystem
+- Ensure services are started within docker-compose, rather then sleeping within application
+- Add logging
