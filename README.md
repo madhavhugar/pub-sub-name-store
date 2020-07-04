@@ -26,8 +26,9 @@ cd consumer
 python -m pytest tests/
 ```
 
-### TODO
+### Possible improvements
 
 - Test functionality that depends on rabbitMQ - (still quite new to golang testing ecosystem)
 - Ensure services are started within docker-compose, rather then sleeping within application
 - Include logging
+- Integration tests
